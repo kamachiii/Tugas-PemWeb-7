@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="card container shadow my-5 p-3">
+        <h3 class="text-center fw-bold">FORM REGISTRASI</h3>
+        <form id="form_validasi" action="javascript:void(0)" method="get" onsubmit="return requiredInput()">
+            <div class="form-group pb-2">
+                <label for="nama_pelanggan">Nama Pelanggan</label>
+                <input class="form-control" type="text" name="nama_pelanggan" id="nama_pelanggan">
+                <span class="text-danger" id="nama_pelanggan_error"></span>
+            </div>
+            <div class="form-group pb-2">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" name="email" id="email" >
+                <span class="text-danger" id="email_error"></span>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="jam_keberangkatan">Jam Keberangkatan</label>
+                    <input class="form-control" type="text" name="jam_keberangkatan" id="jam_keberangkatan" >
+                    <span class="text-danger" id="jam_keberangkatan_error"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label for="tujuan_keberangkatan">Tujuan Keberangkatan</label>
+                    <input class="form-control" type="text" name="tujuan_keberangkatan" id="tujuan_keberangkatan" >
+                    <span class="text-danger" id="tujuan_keberangkatan_error"></span>
+                </div>
+            </div>
+            <div class="form-group pb-2">
+                <label for="jumlah_tiket">Jumlah Tiket</label>
+                <input class="form-control" type="text" name="jumlah_tiket" id="jumlah_tiket">
+                <span class="text-danger" id="jumlah_tiket_error"></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+    </div>
+
+    <div id="hasil" class="container card shadow p-3"></div>
+
+    <script>
+        // Pendefinisian variabel untuk input
+        let nama_pelanggan = document.getElementById('nama_pelanggan');
+        let email = document.getElementById('email');
+        let jam_keberangkatan = document.getElementById('jam_keberangkatan');
+        let tujuan_keberangkatan = document.getElementById('tujuan_keberangkatan');
+        let jumlah_tiket = document.getElementById('jumlah_tiket');
+
+        // Pendefinisian variabel untuk error
+        let nama_pelanggan_error = document.getElementById('nama_pelanggan_error');
+        let email_error = document.getElementById('email_error');
+        let jam_keberangkatan_error = document.getElementById('jam_keberangkatan_error');
+        let tujuan_keberangkatan_error = document.getElementById('tujuan_keberangkatan_error');
+        let jumlah_tiket_error = document.getElementById('jumlah_tiket_error');
+
+        function requiredInput(){
+            let formValid = true;
+
+            // Nama Pelanggan
+            if(nama_pelanggan.value === ''){
+                nama_pelanggan_error.style.display = 'block';
+                nama_pelanggan_error.innerHTML = 'Nama Pelanggan tidak boleh kosong';
+                formValid = false;
+            }else if(nama_pelanggan.value.length > 30){
+                nama_pelanggan_error.style.display = 'block';
+                nama_pelanggan_error.innerHTML = 'Nama Pelanggan maksimal 30 karakter';
+                formValid = false;
+            }else {
+                nama_pelanggan_error.style.display = 'none';
+            }
+
+            // Email
+            if(email.value === ''){
+                email_error.style.display = 'block';
+                email_error.innerHTML = 'Email tidak boleh kosong';
+                formValid = false;
+            } else {
+                let email_check = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if(!email_check.test(email.value)){
+                    email_error.style.display = 'block';
+                    email_error.innerHTML = 'Email tidak valid';
+                    formValid = false;
+                } else {
+                    email_error.style.display = 'none';
+                }
+            }
+
+            // Jam Keberangkatan
+            let jam_berangkat_check = /^([01]\d|2[0-3]):[0-5]\d$/;
+            if(jam_keberangkatan.value === ''){
+                jam_keberangkatan_error.style.display = 'block';
+                jam_keberangkatan_error.innerHTML = 'Jam Keberangkatan tidak boleh kosong';
+                formValid = false;
+            } else if(!jam_berangkat_check.test(jam_keberangkatan.value)) {
+                jam_keberangkatan_error.style.display = 'block';
+                jam_keberangkatan_error.innerHTML = 'Jam Keberangkatan berformat 00:00 (00:00 - 23:59)';
+                formValid = false;
+
+            } else {
+                jam_keberangkatan_error.style.display = 'none';
+            }
+
+            if(tujuan_keberangkatan.value === ''){
+                tujuan_keberangkatan_error.style.display = 'block';
+                tujuan_keberangkatan_error.innerHTML = 'Tujuan Keberangkatan tidak boleh kosong';
+                formValid = false;
+            } else {
+                tujuan_keberangkatan_error.style.display = 'none';
+            }
+
+            if(jumlah_tiket.value === ''){
+                jumlah_tiket_error.style.display = 'block';
+                jumlah_tiket_error.innerHTML = 'Jumlah Tiket tidak boleh kosong';
+                formValid = false;
+            } else if(isNaN(jumlah_tiket.value)){
+                jumlah_tiket_error.style.display = 'block';
+                jumlah_tiket_error.innerHTML = 'Jumlah Tiket harus berupa angka';
+                formValid = false;
+            }else if(jumlah_tiket.value < 1 || jumlah_tiket.value > 10){
+                jumlah_tiket_error.style.display = 'block';
+                jumlah_tiket_error.innerHTML = 'Jumlah Tiket harus diantara 1 - 10';
+                formValid = false
+            } else {
+                jumlah_tiket_error.style.display = 'none';
+            }
+
+            formValid ? tampilkanData() : false;
+        }
+
+        function tampilkanData() {
+            let hasil = document.getElementById('hasil');
+            let isi = document.getElementById(nama_pelanggan.value);
+            let div = document.createElement('div');
+            div.id = nama_pelanggan.value;
+
+            hasil.appendChild(div);
+            isi.innerHTML = `
+                <p><strong>Nama Pelanggan:</strong> ${nama_pelanggan.value}</p>
+                <p><strong>Email:</strong> ${email.value}</p>
+                <p><strong>Jam Keberangkatan:</strong> ${jam_keberangkatan.value}</p>
+                <p><strong>Tujuan Keberangkatan:</strong> ${tujuan_keberangkatan.value}</p>
+                <p><strong>Jumlah Tiket:</strong> ${jumlah_tiket.value}</p>
+                <hr>
+            `
+        }
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

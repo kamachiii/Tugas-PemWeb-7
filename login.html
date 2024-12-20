@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+    <script>
+        function userChecked(){
+            username  = document.getElementById('username').value;
+            password = document.getElementById('password').value;
+            if(username == ''){
+                alert('Username is required');
+            }else if(username != 'admin' && password != 'admin123'){
+                window.location.href = '/';
+                alert('Username is invalid');
+            }else {
+                window.location.href = 'currentcy.html';
+            }
+        }
+    </script>
+<body>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <button type="submit" onclick="userChecked()">Submit</button>
+</body>
+</html>

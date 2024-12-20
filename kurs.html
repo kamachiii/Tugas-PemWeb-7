@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currentcy Converted</title>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        th, td{
+            border: 1px solid black;
+            text-align: center;
+        }
+        input, select{
+            width: 32vw;
+            height: 25px;
+            font-size: large;
+            border: 0;
+        }
+        input:focus, select:focus {
+            outline: none;
+        }
+        select {
+            height: 31px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Input</th>
+            <th>Nilai Mata Uang</th>
+            <th>Rupiah</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="number" id="input" placeholder="Masukkan nilai..." oninput="convertUang()">
+            </td>
+            <td>
+                <select name="convert" id="convert" onchange="convertUang()">
+                    <option value="usd" selected>USD</option>
+                    <option value="sgd">SGD</option>
+                    <option value="myr">MYR</option>
+                    <option value="jpy">JPY</option>
+                    <option value="eur">EUR</option>
+                    <option value="sar">SAR</option>
+                </select>
+            </td>
+            <td>
+                <input type="text" id="output" placeholder="hasil" disabled>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        let nilai = document.getElementById('input');
+        let mataUang = document.getElementById('convert');
+        let hasil = document.getElementById('output');
+        let IDRupiah = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 2
+        });
+
+        function convertUang(){
+            bil = nilai.value;
+            uang = mataUang.value;
+
+            switch (uang) {
+                case 'usd':
+                    hasil.value = IDRupiah.format(bil * 9915);
+                    break;
+                case 'sgd':
+                    hasil.value = IDRupiah.format(bil * 13472);
+                    break;
+                case 'myr':
+                    hasil.value = IDRupiah.format(bil * 874);
+                    break;
+                case 'jpy':
+                    hasil.value = IDRupiah.format(bil * 120);
+                    break;
+                case 'eur':
+                    hasil.value = IDRupiah.format(bil * 15888);
+                    break;
+                case 'sar':
+                    hasil.value = IDRupiah.format(bil * 3592);
+                    break;
+            }
+            // console.log(hasil.value);
+        }
+    </script>
+</body>
+</html>
